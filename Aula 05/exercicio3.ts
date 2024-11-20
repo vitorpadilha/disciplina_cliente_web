@@ -11,10 +11,10 @@ class Pessoa {
 var pessoa4 = (new Pessoa("José", 35));
 pessoa4.cpf = 45
 var pessoas2: Pessoa[] = [
-    new Pessoa("Vitor", 35),
-    {nome: "João", idade: 25, cpf:5} as Pessoa,
-    new Pessoa("Maria", 30),
-    pessoa4
+    new Pessoa("Vitor", 35), //Chamando a classe
+    {nome: "João", idade: 25, cpf:5} as Pessoa, // Dando CAST no objeto
+    new Pessoa("Maria", 30), //Chamando a classe
+    pessoa4 //Usando objeto criado anteriormente
 ];
 var continua: number = 1;
 
