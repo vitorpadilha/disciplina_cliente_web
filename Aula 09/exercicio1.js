@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     arrayCidades.forEach((cidade)=>{
         var option = select.appendChild(document.createElement("option"));
         option.value = cidade.valor;
-        option.textContent = cidade.nome
+        option.textContent = cidade.nome;
     })
 
     document.body.appendChild(select);
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var div = document.createElement("div");
     botao.addEventListener("click", (ev) => {
-        div.textContent = select.options[select.selectedIndex].value + " - "+  select.options[select.selectedIndex].textContent;
+        div.textContent = select.options[select.selectedIndex].value + " - "+  select.options[select.selectedIndex].textContent+ " - \uD83D\uDC04";
     });
     document.body.appendChild(botao);
     document.body.appendChild(div);

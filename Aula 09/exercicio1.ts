@@ -3,7 +3,7 @@ class Cidade{
     valor: number;
     constructor(valor: number, nome: string){
         this.nome = nome;
-        this. valor=valor;
+        this.valor=valor;
     }
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,17 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
         var option: HTMLOptionElement = select.appendChild(document.createElement("option"));
         option.value = cidade.valor.toString();
         option.textContent = cidade.nome
-    })
+    });
 
     document.body.appendChild(select);
-
     var botao: HTMLButtonElement = document.createElement("button");
     botao.setAttribute("type", "button");
-    botao.textContent = "Exibir";
+    botao.textContent = 'Exibir\u{0169}';
 
     var div: HTMLDivElement = document.createElement("div");
     botao.addEventListener("click", (ev:MouseEvent) => {
-        div.textContent = select.options[select.selectedIndex].value + " - "+  select.options[select.selectedIndex].textContent;
+        div.textContent = select.options[select.selectedIndex].value + " - "+  select.options[select.selectedIndex].textContent+ " -  \uD83D\uDC04";
     });
     document.body.appendChild(botao);
     document.body.appendChild(div);
