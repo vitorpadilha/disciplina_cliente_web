@@ -4,10 +4,5 @@ var arrayA = [ { nome: 'Ana', altura: 1.75 },
 { nome: 'Darlan', altura: 1.68 }
 ]
 
-
-arrayB = [];
-
-arrayA.map((e,i)=> {
-    arrayB[i] = e.altura*2;
-    return e;
-});
+arrayB = arrayA.map(e=>{return {...e, altura2: e.altura*2}});
+console.log(arrayB);
