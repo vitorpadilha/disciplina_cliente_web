@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(select);
     var botao = document.createElement("button");
     botao.setAttribute("type", "button");
-    botao.textContent = "Exibir";
+    botao.textContent = 'Exibir\u{0169}';
     var div = document.createElement("div");
     botao.addEventListener("click", (ev) => {
-        div.textContent = select.options[select.selectedIndex].value + " - " + select.options[select.selectedIndex].textContent;
+        div.textContent = select.options[select.selectedIndex].value + " - " + select.options[select.selectedIndex].textContent + " -  \uD83D\uDC04";
     });
     document.body.appendChild(botao);
     document.body.appendChild(div);

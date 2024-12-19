@@ -1,4 +1,4 @@
 var carregarDiv = ()=>{
-    var divPrinc: HTMLDivElement = document.getElementById("principal");
-    divPrinc.innerHTML = "Conteúdo carregado com sucesso";
+    var divPrincipalll: HTMLDivElement = <HTMLDivElement>document.getElementById("principal");
+    divPrincipalll.innerHTML = "Conteúdo carregado com sucesso";
 }
