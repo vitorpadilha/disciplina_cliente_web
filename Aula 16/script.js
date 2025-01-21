@@ -1,14 +1,7 @@
 const { rejects } = require("assert");
 
 function carregarFrutas( num) {
-        return new Promise( resolve=> {
-            setTimeout( () => {
-                if(num>5)
-                resolve("Õk");
-                else 
-                rejects('Número menor que 5');
-            }, 2000 );
-        });
+       git
 }
 
 //document.addEventListener( 'DOMContentLoaded', () => {
