@@ -38,11 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
         limpaCampo(opcoesMultiplos);
         for (var i = 0; i < valor; i++) {
             var label = document.createElement("label");
-            label.setAttribute("for", "label" + i);
+            label.setAttribute("for", "label_" + i);
             label.textContent = `Valor do Campo ${i}`;
             var campoTexto = document.createElement("input");
             campoTexto.setAttribute('type', "text");
-            campoTexto.setAttribute("id", "label" + i);
+            campoTexto.setAttribute("id", "label_" + i);
             opcoesMultiplos.appendChild(label);
             opcoesMultiplos.appendChild(campoTexto);
         }
@@ -95,7 +95,7 @@ var retiraValoresMultiplos = () => {
     var campos = document.getElementsByTagName("input");
     var retorno = [];
     for (var i = 0; i < campos.length; i++) {
-        if ((_a = campos[i].getAttribute("id")) === null || _a === void 0 ? void 0 : _a.includes("label")) {
+        if ((_a = campos[i].getAttribute("id")) === null || _a === void 0 ? void 0 : _a.includes("label_")) {
             retorno.push(campos[i].value);
         }
     }
