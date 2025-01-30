@@ -10,10 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 function retornaApos3Segundos() {
     return __awaiter(this, void 0, void 0, function* () {
-        /*return new Promise(resolve => {
+        return new Promise(resolve => {
             setTimeout(() => resolve(100), 3000);
-        });*/
-        return setTimeout(() => { return 100; }, 3000);
+        });
     });
 }
 (() => __awaiter(void 0, void 0, void 0, function* () {
