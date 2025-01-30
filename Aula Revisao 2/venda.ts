@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', (ev)=>{
+document.addEventListener('DOMContentLoaded', async (ev)=>{
     (document.getElementById("oculta") as HTMLDivElement).style.display = "none";
-    carregaProdutos(document.getElementById("produto") as HTMLSelectElement);
+    await carregaProdutos(document.getElementById("produto") as HTMLSelectElement);
     document.getElementById("vendedor")?.addEventListener('change',(ev2)=>{
         const vlVendedor: string = (document.getElementById("vendedor") as HTMLSelectElement).value;
         if(vlVendedor != ""){
@@ -66,15 +66,13 @@ let varTotal: number = 0;
 async function adicionaProdutoTabela(dados: FormData) {
         document.getElementById("tabelaProdutos")?.querySelectorAll("tbody").forEach((corpoTabela) => {
             var linha = document.createElement("tr");
-
+            var obj = JSON.parse(dados.get("produto")?.toString()??"");
             var colunaNome = document.createElement("td");
-            console.log(dados);
-            console.log(dados.get("produto"));
-            colunaNome.textContent = JSON.parse(dados.get("produto")?.toString()??"").nome;
+            colunaNome.textContent = obj.nome;
             var quantidade = parseFloat(dados.get("quantidade")?.toString()??"0");
             var colunaQuantidade = document.createElement("td");
             colunaQuantidade.textContent = quantidade.toString().replace(".",",");
-            var valorProduto = JSON.parse(dados.get("produto")?.toString()??"").preco;
+            var valorProduto = obj.preco;
             var colunaValor = document.createElement("td");
             colunaValor.textContent = "R$"+parseFloat(valorProduto).toFixed(2).replace(".", ",");
             var colunaSubTotal = document.createElement("td");
@@ -85,7 +83,7 @@ async function adicionaProdutoTabela(dados: FormData) {
             linha.appendChild(colunaValor);
             linha.appendChild(colunaSubTotal);
             corpoTabela.appendChild(linha);
-            produtosComprados.push({idProduto: JSON.parse(dados.get("produto")?.toString()??"").id, subTotal: (valorProduto*quantidade).toFixed(2),quantidade: quantidade});
+            produtosComprados.push({idProduto: obj.id, subTotal: (valorProduto*quantidade).toFixed(2),quantidade: quantidade});
 
             const totalCompraElement = document.getElementById("totalCompra");
             if (totalCompraElement) {

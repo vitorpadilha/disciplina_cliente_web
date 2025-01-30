@@ -8,18 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-document.addEventListener('DOMContentLoaded', (ev) => __awaiter(void 0, void 0, void 0, function* () {
+document.addEventListener('DOMContentLoaded', (ev) => {
     var _a;
-    (_a = document.getElementById("btnCadastrar")) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (ev) => {
+    (_a = document.getElementById("btnCadastrar")) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (ev) => __awaiter(void 0, void 0, void 0, function* () {
         var form = new FormData(document.getElementById("formCadastro"));
         if (validaCampos(form)) {
-            console.log("Antes await");
+            //console.log("Antes await");
             cadastrarProduto(form);
-            console.log("Depois do depois await");
+            //console.log(produto);
+            //console.log("Depois do depois await");
         }
         ev.preventDefault();
-    });
-}));
+    }));
+});
 function validaCampos(form) {
     let campos = ["nome", "preco", "fabricante", "tipoUnidade"];
     let valido = true;
@@ -50,9 +51,9 @@ function cadastrarProduto(produto) {
                 throw new Error(`Erro ao cadastrar produto: ${response.statusText}`);
             }
             const data = yield response.json();
-            setTimeout(() => { }, 2000);
+            //setTimeout(()=>{}, 2000);
             console.log("Dentro da funcao async");
-            console.log('Produto cadastrado com sucesso:', data);
+            alert('Produto cadastrado com sucesso');
         }
         catch (error) {
             console.error('Erro ao cadastrar produto:', error);

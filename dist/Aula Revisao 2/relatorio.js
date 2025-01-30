@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', (ev) => {
     let campoProduto = document.getElementById("produto");
     carregaProdutosRelatorio(campoProduto);
     campoProduto === null || campoProduto === void 0 ? void 0 : campoProduto.addEventListener('change', (ev2) => {
-        console.log("Mudou");
         const vlVendedor = campoProduto.value;
         limparTabela(document.getElementById("tabelaVendasProduto"));
         carregaDadosTabela(vlVendedor);
@@ -39,6 +38,7 @@ function carregaProdutosRelatorio(select) {
         }
     });
 }
+let totalVenda = 0;
 function carregaDadosTabela(produtoParam) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -50,8 +50,6 @@ function carregaDadosTabela(produtoParam) {
             let totalVenda = 0;
             data.filter((venda) => {
                 return venda.produtos.filter((produto) => {
-                    console.log(produto.idProduto);
-                    console.log(produtoParam);
                     return produto.idProduto == JSON.parse(produtoParam).id;
                 }).length > 0;
             }).forEach((venda) => {

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded',  (ev)=>{
         var form: FormData = new FormData(document.getElementById("formCadastro") as HTMLFormElement);
         if(validaCampos(form)){
             //console.log("Antes await");
-            var produto = await cadastrarProduto(form);
+            cadastrarProduto(form);
             //console.log(produto);
             //console.log("Depois do depois await");
         }
@@ -44,7 +44,7 @@ async function cadastrarProduto(produto: FormData) {
       }
   
       const data = await response.json();
-      setTimeout(()=>{}, 2000);
+      //setTimeout(()=>{}, 2000);
       console.log("Dentro da funcao async");
       alert('Produto cadastrado com sucesso');
     } catch (error) {

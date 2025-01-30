@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', (ev)=>{
     let campoProduto = document.getElementById("produto") as HTMLSelectElement;
     carregaProdutosRelatorio(campoProduto);
     campoProduto?.addEventListener('change',(ev2)=>{
-        console.log("Mudou");
         const vlVendedor: string = campoProduto.value;
         limparTabela(document.getElementById("tabelaVendasProduto") as HTMLTableElement);
         carregaDadosTabela(vlVendedor);
@@ -27,7 +26,7 @@ async function carregaProdutosRelatorio(select: HTMLSelectElement) {
     }
 }
 
-
+let totalVenda = 0;
 async function carregaDadosTabela(produtoParam:string) {
     try {
         const response = await fetch('http://localhost:3000/vendas');
@@ -38,14 +37,12 @@ async function carregaDadosTabela(produtoParam:string) {
         let totalVenda = 0;
         data.filter((venda: any)=>{
             return venda.produtos.filter((produto:any)=>{
-                console.log(produto.idProduto);
-                console.log(produtoParam);
                 return produto.idProduto == JSON.parse(produtoParam).id;
             }).length > 0;
         }).forEach((venda: any) => {
             console.log(venda);
             adicionaProduto(venda, produtoParam);
-            totalVenda ++;
+            totalVenda++;
         });
         const totalCompraElement = document.getElementById("presentesEmVendas");
         if (totalCompraElement) {

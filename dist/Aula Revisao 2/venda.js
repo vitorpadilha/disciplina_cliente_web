@@ -8,10 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-document.addEventListener('DOMContentLoaded', (ev) => {
+document.addEventListener('DOMContentLoaded', (ev) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     document.getElementById("oculta").style.display = "none";
-    carregaProdutos(document.getElementById("produto"));
+    yield carregaProdutos(document.getElementById("produto"));
     (_a = document.getElementById("vendedor")) === null || _a === void 0 ? void 0 : _a.addEventListener('change', (ev2) => {
         const vlVendedor = document.getElementById("vendedor").value;
         if (vlVendedor != "") {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', (ev) => {
         var form = new FormData(document.getElementById("formVenda"));
         finalizarCompras(form);
     });
-});
+}));
 function finalizarCompras(dados) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -80,16 +80,15 @@ function adicionaProdutoTabela(dados) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         (_a = document.getElementById("tabelaProdutos")) === null || _a === void 0 ? void 0 : _a.querySelectorAll("tbody").forEach((corpoTabela) => {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
+            var _a, _b, _c, _d;
             var linha = document.createElement("tr");
+            var obj = JSON.parse((_b = (_a = dados.get("produto")) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : "");
             var colunaNome = document.createElement("td");
-            console.log(dados);
-            console.log(dados.get("produto"));
-            colunaNome.textContent = JSON.parse((_b = (_a = dados.get("produto")) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : "").nome;
+            colunaNome.textContent = obj.nome;
             var quantidade = parseFloat((_d = (_c = dados.get("quantidade")) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : "0");
             var colunaQuantidade = document.createElement("td");
             colunaQuantidade.textContent = quantidade.toString().replace(".", ",");
-            var valorProduto = JSON.parse((_f = (_e = dados.get("produto")) === null || _e === void 0 ? void 0 : _e.toString()) !== null && _f !== void 0 ? _f : "").preco;
+            var valorProduto = obj.preco;
             var colunaValor = document.createElement("td");
             colunaValor.textContent = "R$" + parseFloat(valorProduto).toFixed(2).replace(".", ",");
             var colunaSubTotal = document.createElement("td");
@@ -100,7 +99,7 @@ function adicionaProdutoTabela(dados) {
             linha.appendChild(colunaValor);
             linha.appendChild(colunaSubTotal);
             corpoTabela.appendChild(linha);
-            produtosComprados.push({ idProduto: JSON.parse((_h = (_g = dados.get("produto")) === null || _g === void 0 ? void 0 : _g.toString()) !== null && _h !== void 0 ? _h : "").id, subTotal: (valorProduto * quantidade).toFixed(2), quantidade: quantidade });
+            produtosComprados.push({ idProduto: obj.id, subTotal: (valorProduto * quantidade).toFixed(2), quantidade: quantidade });
             const totalCompraElement = document.getElementById("totalCompra");
             if (totalCompraElement) {
                 totalCompraElement.textContent = "R$" + varTotal.toFixed(2).replace(".", ",");
