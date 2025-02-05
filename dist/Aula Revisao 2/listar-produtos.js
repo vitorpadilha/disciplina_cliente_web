@@ -49,6 +49,21 @@ function removerProduto(produto, idLinhaARemover) {
         }
     });
 }
+function editarProduto(produto) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const formulario = document.getElementById("formEditar");
+            const campoIdProduto = document.getElementById("idProduto");
+            campoIdProduto.setAttribute("value", produto.id);
+            formulario.submit();
+            //limparTabelaProdutod(document.getElementById("tabelaProdutosLista") as HTMLTableElement);
+            //listarProdutos();
+        }
+        catch (error) {
+            console.error('Erro ao buscar produto:', error);
+        }
+    });
+}
 function limparTabelaProdutod(tabela) {
     tabela.querySelectorAll("tbody").forEach((corpoTabela) => {
         corpoTabela.innerHTML = "";
@@ -72,10 +87,17 @@ function adicionaProdutoTabela2(produto) {
             link.textContent = "Remover";
             link.href = "#";
             colunaRemover.appendChild(link);
+            var colunaEditar = document.createElement("td");
+            var linkEd = document.createElement("a");
+            linkEd.addEventListener('click', (ev) => { editarProduto(produto); });
+            linkEd.textContent = "Editar";
+            linkEd.href = "#";
+            colunaEditar.appendChild(linkEd);
             linha.appendChild(colunaNome);
             linha.appendChild(colunaPreco);
             linha.appendChild(colunaFabricante);
             linha.appendChild(colunaRemover);
+            linha.appendChild(colunaEditar);
             corpoTabela.appendChild(linha);
         });
     });

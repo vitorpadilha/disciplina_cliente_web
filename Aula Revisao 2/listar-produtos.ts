@@ -33,6 +33,21 @@ async function removerProduto(produto:any, idLinhaARemover:string) {
         console.error('Erro ao excluir produto:', error);
     }
 }
+
+async function editarProduto(produto:any) {
+    try {
+        const formulario = document.getElementById("formEditar") as HTMLFormElement;
+        const campoIdProduto = document.getElementById("idProduto") as HTMLInputElement;
+        campoIdProduto.setAttribute("value", produto.id);
+        formulario.submit();
+        //limparTabelaProdutod(document.getElementById("tabelaProdutosLista") as HTMLTableElement);
+        //listarProdutos();
+    } catch (error) {
+        console.error('Erro ao buscar produto:', error);
+    }
+}
+
+
 function limparTabelaProdutod(tabela: HTMLTableElement){
     tabela.querySelectorAll("tbody").forEach((corpoTabela) => {
         corpoTabela.innerHTML = "";
@@ -54,10 +69,18 @@ async function adicionaProdutoTabela2(produto: any) {
         link.textContent = "Remover";
         link.href = "#";
         colunaRemover.appendChild(link);
+
+        var colunaEditar = document.createElement("td");
+        var linkEd = document.createElement("a");
+        linkEd.addEventListener('click', (ev) => {editarProduto(produto);});
+        linkEd.textContent = "Editar";
+        linkEd.href = "#";
+        colunaEditar.appendChild(linkEd);
         linha.appendChild(colunaNome);
         linha.appendChild(colunaPreco);
         linha.appendChild(colunaFabricante);
         linha.appendChild(colunaRemover);
+        linha.appendChild(colunaEditar);
         corpoTabela.appendChild(linha);      
     });   
 }
