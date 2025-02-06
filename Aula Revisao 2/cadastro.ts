@@ -43,6 +43,9 @@ function validaCampos(form: FormData): boolean{
 }
 async function cadastrarEditarProduto(produto: FormData, op: string){
     try {
+      if(produto.has("id") && produto.get("id") == ""){
+        produto.delete("id");
+      }
       const url: string = 'http://localhost:3000/produtos'+ (op=="cadastrar"?'':'/'+produto.get("id"));
       const response = await fetch(url, {
         method: op=="cadastrar"?'POST':'PUT',
