@@ -10,6 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 document.addEventListener('DOMContentLoaded', (ev) => {
     var _a;
+    if (window.location.search != "" && window.location.search.includes("idProduto=")) {
+        const idProduto = window.location.search.split("=")[1];
+        recuperaDadosProduto(idProduto);
+    }
     (_a = document.getElementById("btnCadastrar")) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (ev) => __awaiter(void 0, void 0, void 0, function* () {
         var form = new FormData(document.getElementById("formCadastro"));
         const campoId = document.getElementById("idProduto");
@@ -23,12 +27,6 @@ document.addEventListener('DOMContentLoaded', (ev) => {
         }
         ev.preventDefault();
     }));
-    if (window.location.search != "" && window.location.search.includes("idProduto=")) {
-        console.log("Editar produto");
-        const idProduto = window.location.search.split("=")[1];
-        console.log(idProduto);
-        recuperaDadosProduto(idProduto);
-    }
 });
 function validaCampos(form) {
     let campos = ["nome", "preco", "fabricante", "tipoUnidade"];
@@ -49,6 +47,9 @@ function validaCampos(form) {
 function cadastrarEditarProduto(produto, op) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            if (produto.has("id") && produto.get("id") == "") {
+                produto.delete("id");
+            }
             const url = 'http://localhost:3000/produtos' + (op == "cadastrar" ? '' : '/' + produto.get("id"));
             const response = yield fetch(url, {
                 method: op == "cadastrar" ? 'POST' : 'PUT',
@@ -91,12 +92,10 @@ function recuperaDadosProduto(idProduto) {
 }
 function carregaDadosEditarNoFormulario(produto) {
     var form = document.getElementById("formCadastro");
-    console.log(produto);
     form.querySelectorAll("input").forEach((input) => {
         input.setAttribute("value", produto[input.name]);
     });
     form.querySelectorAll("select").forEach((select) => {
-        select.setAttribute("value", produto[select.name]);
         marcaSelect(select, produto[select.name]);
     });
 }

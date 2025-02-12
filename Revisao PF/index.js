@@ -9,11 +9,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
     montaDivTabela(divAux);       
    
 });        
-var nomes = [];               
 var cargaInicial = () =>{
-    if(localStorage.getItem("nomes")) {
-        
-        localStorage.setItem("nomes", JSON.stringify(nomes));    
+    console.log(localStorage.getItem("nomes"));
+    if(!localStorage.getItem("nomes")) {
+        localStorage.setItem("nomes", JSON.stringify([]));
     }
 }
 function cadastrarNomeNoArray(nome){
@@ -47,6 +46,9 @@ function montaDivTabela(el, nome) {
     var thCabecalhoNome = document.createElement("th");
     thCabecalhoNome.textContent = "Nome"
     trCabecalho.appendChild(thCabecalhoNome);
+    var thCabecalhoAcao = document.createElement("th");
+    thCabecalhoAcao.textContent = "Acao"
+    trCabecalho.appendChild(thCabecalhoNome);
     var nomes = JSON.parse(localStorage.getItem("nomes"));
     if(nomes) {
         nomes.filter(valor=>{
@@ -58,8 +60,18 @@ function montaDivTabela(el, nome) {
             var trCorpo = document.createElement("tr"); 
             var tdCorpo = document.createElement("td");
             tdCorpo.textContent = element;
+            var tdCorpoAcao = document.createElement("td");
+            var linkEnviar = document.createElement("a");
+            linkEnviar.setAttribute("href", "#");
+            linkEnviar.textContent = "Enviar para JSON SERVER";
+            linkEnviar.addEventListener("click", ()=>{  
+                enviarParaNuvem(element);
+            })
+            tdCorpoAcao.appendChild(linkEnviar);
+
             trCorpo.appendChild(tdCorpo);
             tTable.appendChild(trCorpo); 
+            tTable.appendChild(tdCorpoAcao);
         });
     
     }
@@ -67,6 +79,9 @@ function montaDivTabela(el, nome) {
     
 }
 
+function enviarParaNuvem() {
+
+}
 function montaDivFiltro() {
     let tBody = document.getElementsByTagName("body")[0];
     let divFiltro =  document.createElement("div");
