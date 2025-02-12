@@ -1,13 +1,35 @@
+
 document.addEventListener("DOMContentLoaded", ()=>{
     cargaInicial();
-    montaDivCadastro();
     montaDivFiltro();
+    document.getElementById("btnCadastrar").addEventListener("click", (ev) => {
+        ev.preventDefault();
+        var form = new FormData(document.getElementById("formCadastro"));
+        var obj = {};
+        var documentos = [];
+        form.forEach((valor, chave)=>{
+            if(chave.indexOf("Documento")>-1){
+                if(chave.indexOf("tipo")>-1){
+                    let chaveNumero = chave.replace("tipo", "numero");
+                    documentos.push({tipo: valor, numero: form.get(chaveNumero)});
+                }
+               
+            }else {
+                obj[chave] = valor;
+            }
+           
+        });
+        obj["documentos"] = documentos;
+        console.log(JSON.stringify(obj));
+        console.log(form);
+        cadastrarNomeNoArray(form);
+    });
     var divAux = document.createElement("div");
     divAux.setAttribute("id", "divAux");
     var tBody = document.getElementsByTagName("body")[0];
     tBody.appendChild(divAux);
     montaDivTabela(divAux);       
-   
+    
 });        
 var cargaInicial = () =>{
     console.log(localStorage.getItem("nomes"));
@@ -18,11 +40,7 @@ var cargaInicial = () =>{
 function cadastrarNomeNoArray(nome){
     console.log(nome);
     var nomes = JSON.parse(localStorage.getItem("nomes"));
-    if(!nomes){
-        localStorage.setItem("nomes", JSON.stringify([]));
-        nomes = [];
-    }
-   
+ 
     nomes.push(nome);
     localStorage.setItem("nomes", JSON.stringify(nomes)); 
 }
@@ -49,6 +67,7 @@ function montaDivTabela(el, nome) {
     var thCabecalhoAcao = document.createElement("th");
     thCabecalhoAcao.textContent = "Acao"
     trCabecalho.appendChild(thCabecalhoNome);
+    trCabecalho.appendChild(thCabecalhoAcao);
     var nomes = JSON.parse(localStorage.getItem("nomes"));
     if(nomes) {
         nomes.filter(valor=>{
@@ -113,36 +132,44 @@ function montaDivFiltro() {
     })
 }
 
+var contador = 0;
+let addDoc = () => {
+    var divDocumentos = document.getElementById("divDocumentos");
+    var divWrapper = document.createElement("div");
+    var labelTipoDocumento = document.createElement("label");
+    labelTipoDocumento.setAttribute("for", "tipoDocumento"+contador);
+    labelTipoDocumento.textContent = "Tipo de Documento: ";
+    var tSelectTipoDocumento = document.createElement("select");
+    tSelectTipoDocumento.setAttribute("name", "tipoDocumento"+contador);
+    tSelectTipoDocumento.setAttribute("id", "tipoDocumento"+contador);
+    var options = ["CPF", "RG", "CNH", "Passaporte"];
+    options.forEach(element => {
+        var option = document.createElement("option");
+        option.setAttribute("value", element);
+        option.textContent = element;
+        tSelectTipoDocumento.appendChild(option);
+    });
+    divWrapper.appendChild(labelTipoDocumento);
+    divWrapper.appendChild(tSelectTipoDocumento);
 
-function montaDivCadastro() {
-    var tBody = document.getElementsByTagName("body")[0];
-   
-    var divCadastro = document.createElement("div");
-    divCadastro.setAttribute("id", "divCadastro");
-    tBody.appendChild(divCadastro);
+    var labelNumeroDocumento = document.createElement("label");
+    labelNumeroDocumento.setAttribute("for", "numeroDocumento"+contador);
+    labelNumeroDocumento.textContent = " Numero do Documento: ";
+    divWrapper.appendChild(labelNumeroDocumento);
+    var tInputNumeroDocumento = document.createElement("input");
+    tInputNumeroDocumento.setAttribute("type", "text");
+    tInputNumeroDocumento.setAttribute("name", "numeroDocumento"+contador);
+    tInputNumeroDocumento.setAttribute("id", "numeroDocumento");
+    divWrapper.appendChild(tInputNumeroDocumento);
 
-    var fForm = document.createElement("form");
-    fForm.setAttribute("action", "cadastro.php");
-    fForm.setAttribute("method", "POST");
-    divCadastro.appendChild(fForm);
-
-    var tLabel1 = document.createElement("label");
-    tLabel1.setAttribute("for", "campo_nome");
-    fForm.appendChild(tLabel1);
-
-    var tInputNome = document.createElement("input");
-    tInputNome.setAttribute("type", "text");
-    tInputNome.setAttribute("name", "nome");
-    tInputNome.setAttribute("id", "campo_nome");
-    fForm.appendChild(tInputNome);
-
-    var tButton = document.createElement("button");
-    tButton.setAttribute("type", "button");
-    tButton.setAttribute("name", "cadastrar");
-    tButton.textContent = "Cadastrar"
-    fForm.appendChild(tButton);
-    tButton.addEventListener("click", ()=>{
-        cadastrarNomeNoArray(tInputNome.value);
-        apagaDivTabela(document.getElementById("divAux"), "");
-    })
+    let btnRemover = document.createElement("button");
+    btnRemover.setAttribute("type", "button");
+    btnRemover.textContent = "Remover";
+    btnRemover.addEventListener("click", ()=>{  
+        divDocumentos.removeChild(divWrapper);
+    });
+    divWrapper.appendChild(btnRemover);
+    divDocumentos.appendChild(divWrapper);
+    contador++;
+    
 }
